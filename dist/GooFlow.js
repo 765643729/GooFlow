@@ -92,6 +92,10 @@ function GooFlow(bgDiv,property){
     this.$editable = property.editable;  // 工作区是否可编辑
     this.$MainContener = property.MainContener;  //（0,0）绝对坐标的容器, 直接传入jquery object, 会直接转换成dom, 不知道为何
 
+    //当操作某个单元（结点/线）被由不选中变成选中时, 触发的方法, 返回FALSE可阻止选中事件的发生
+    //格式function(id,type)：id是单元的唯一标识ID,type是单元的种类,有"node","line"两种取值,"area"不支持被选中
+    this.onItemFocus = property.onItemFocus;
+
     var width;
     if( property.width == 'auto' ){
         width = this.$bgDiv.parent().width()-2;
@@ -346,9 +350,9 @@ function GooFlow(bgDiv,property){
         //当操作某个单元（结点/线/分组块）被重命名时, 触发的方法, 返回FALSE可阻止重命名事件的发生
         //格式function(id,name,type)：id是单元的唯一标识ID,type是单元的种类,有"node","line","area"三种取值,name是新的名称
         this.onItemRename = property.onItemRename;
-        //当操作某个单元（结点/线）被由不选中变成选中时, 触发的方法, 返回FALSE可阻止选中事件的发生
-        //格式function(id,type)：id是单元的唯一标识ID,type是单元的种类,有"node","line"两种取值,"area"不支持被选中
-        this.onItemFocus = property.onItemFocus;
+        // //当操作某个单元（结点/线）被由不选中变成选中时, 触发的方法, 返回FALSE可阻止选中事件的发生
+        // //格式function(id,type)：id是单元的唯一标识ID,type是单元的种类,有"node","line"两种取值,"area"不支持被选中
+        // this.onItemFocus = property.onItemFocus;
         //当操作某个单元（结点/线）被由选中变成不选中时, 触发的方法, 返回FALSE可阻止取消选中事件的发生
         //格式function(id, type)：id是单元的唯一标识ID,type是单元的种类,有"node","line"两种取值,"area"不支持被取消选中
         this.onItemBlur = property.onItemBlur;
